@@ -53,6 +53,7 @@ function AdminPets() {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this pet? This action cannot be undone.")) return;
     setError("");
     try {
       await API.delete(`/pets/${id}`);

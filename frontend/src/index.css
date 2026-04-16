@@ -634,38 +634,267 @@ button {
   }
 }
 
-/* ─── Find a Pet Page ─── */
-.findpets-hero {
-  text-align: center;
-  padding: 52px 24px 36px;
-  max-width: 700px;
+/* ─── Find a Pet Page Redesign ─── */
+.findpets-container {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 40px 80px 80px;
 }
 
-.findpets-hero-title {
-  font-size: 36px;
+.findpets-filter-box {
+  background-color: #feeadd;
+  border-radius: 20px;
+  padding: 24px 32px;
+  margin-bottom: 48px;
+}
+
+.findpets-filter-heading {
+  font-size: 20px;
   font-weight: 800;
   color: #1a1a1a;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
 }
 
-.findpets-hero-subtitle {
-  font-size: 15px;
-  line-height: 1.7;
+.findpets-filter-heading .highlight {
+  color: #b63d1a;
+}
+
+.findpets-search-row {
+  margin-bottom: 24px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #666;
+}
+
+.search-input-wrapper input {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  border-radius: 8px;
+  border: none;
+  background-color: #e5e7eb;
+  font-size: 15px;
+  color: #1a1a1a;
+  outline: none;
+}
+
+.search-input-wrapper input::placeholder {
+  color: #6b7280;
+}
+
+.findpets-dropdown-row {
+  display: flex;
+  gap: 24px;
+}
+
+.findpets-dropdown-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.findpets-dropdown-col label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.findpets-dropdown-col select {
+  padding: 10px 40px 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ebdacf; 
+  font-size: 15px;
+  font-weight: 700;
+  color: #000;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+  cursor: pointer;
+  outline: none;
+}
+
+.findpets-list-header {
+  margin-bottom: 32px;
+}
+
+.findpets-list-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #a84824;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+}
+
+.findpets-list-header p {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .findpets-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 80px 60px;
+  margin-bottom: 48px;
 }
 
 .findpets-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  gap: 32px;
+}
+
+.findpets-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.findpets-card-img-wrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.findpets-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.findpets-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  background: #efe4d8;
+}
+
+.findpets-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.findpets-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.findpets-card-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.findpets-card-age {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.findpets-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.findpets-card-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #a07469;
+  background: #fbded0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.findpets-card-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0 0 24px 0;
+  flex-grow: 1;
+}
+
+.findpets-card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  border-radius: 24px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #1a1a1a;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.findpets-card-btn:hover {
+  border-color: #b63d1a;
+  color: #b63d1a;
+  background: #fffafa;
+}
+
+.findpets-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.page-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #fadfd5;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background-color: #f7cebe;
+}
+
+.page-btn.active {
+  background-color: #795d55;
+  color: white;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .findpets-loading,
@@ -686,20 +915,14 @@ button {
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media (max-width: 900px) {
-  .findpets-content {
+  .findpets-container {
     padding: 0 24px 40px;
   }
 
   .findpets-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 24px;
   }
 }
 

@@ -109,9 +109,9 @@ function AdminDashboard() {
             <div className="admin-chart-bars">
               <div className="admin-chart-bar" style={{ height: "0%" }}></div>
               <div className="admin-chart-bar" style={{ height: "0%" }}></div>
-              <div className="admin-chart-bar" style={{ height: "40%" }}></div>
-              <div className="admin-chart-bar" style={{ height: "70%" }}></div>
-              <div className="admin-chart-bar" style={{ height: "50%" }}></div>
+              <div className="admin-chart-bar" style={{ height: "0%" }}></div>
+              <div className="admin-chart-bar" style={{ height: "0%" }}></div>
+              <div className="admin-chart-bar" style={{ height: "10%" }}></div>
             </div>
             <div className="admin-chart-labels">
               <span>Jan</span>

@@ -11,8 +11,8 @@ function LandingNavbar() {
       <div className="landing-nav-center">
         <Link to="/" className="landing-nav-item">Home</Link>
         <Link to="/pets" className="landing-nav-item">Find a Pet</Link>
-        <Link to="/" className="landing-nav-item">Donate</Link>
-        <Link to="/" className="landing-nav-item">About Us</Link>
+        <Link to="/donate" className="landing-nav-item">Donate</Link>
+        <Link to="/about" className="landing-nav-item">About Us</Link>
       </div>
       <div className="landing-nav-right">
         {user ? (
