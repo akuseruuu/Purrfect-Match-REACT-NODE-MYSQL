@@ -1,0 +1,172 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import API from "../api/api";
+
+function LandingNavbar() {
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  return (
+    <nav className="landing-navbar">
+      <Link to="/" className="landing-brand">Purrfect Match</Link>
+      <div className="landing-nav-center">
+        <Link to="/" className="landing-nav-item">Home</Link>
+        <Link to="/pets" className="landing-nav-item">Find a Pet</Link>
+        <Link to="/" className="landing-nav-item">Donate</Link>
+        <Link to="/" className="landing-nav-item">About Us</Link>
+      </div>
+      <div className="landing-nav-right">
+        {user ? (
+          <>
+            {user.role === "admin" && <Link to="/admin" className="landing-nav-item">Admin</Link>}
+            <button
+              type="button"
+              className="landing-signup-btn"
+              onClick={() => { localStorage.removeItem("user"); window.location.reload(); }}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="landing-login-link">Login</Link>
+            <Link to="/signup" className="landing-signup-btn">Sign-up</Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+function FeaturedPetCard({ pet }) {
+  const imageUrl = pet.image
+    ? pet.image.startsWith("http")
+      ? pet.image
+      : `http://localhost:3000/${pet.image}`
+    : null;
+
+  const formatAge = (age) => {
+    if (!age && age !== 0) return "";
+    const num = parseInt(age, 10);
+    if (num >= 12) {
+      const years = Math.floor(num / 12);
+      return `${years} Year${years > 1 ? "s" : ""} Old`;
+    }
+    return `${num} Month${num !== 1 ? "s" : ""} Old`;
+  };
+
+  /* Parse tags from a comma-separated string, or fall back to defaults */
+  const tags = pet.tags
+    ? pet.tags.split(",").map((t) => t.trim()).filter(Boolean)
+    : [];
+
+  return (
+    <article className="featured-pet-card" id={`featured-pet-${pet.id}`}>
+      <div className="featured-pet-img-wrapper">
+        {imageUrl ? (
+          <img src={imageUrl} alt={pet.name} className="featured-pet-img" />
+        ) : (
+          <div className="featured-pet-img-placeholder">🐾</div>
+        )}
+      </div>
+
+      <div className="featured-pet-body">
+        <div className="featured-pet-top-row">
+          <h3 className="featured-pet-name">{pet.name}</h3>
+          <span className="featured-pet-age">{formatAge(pet.age)}</span>
+        </div>
+
+        <p className="featured-pet-desc">{pet.description}</p>
+
+        <Link to={`/pets/${pet.id}`} className="featured-pet-learn-more">
+          Learn More
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function LandingPage() {
+  const [featuredPets, setFeaturedPets] = useState([]);
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const response = await API.get("/pets");
+        const all = response.data.data || [];
+        /* Show the 3 most recent pets */
+        setFeaturedPets(all.slice(0, 3));
+      } catch {
+        /* Silently fail – section just won't show */
+      }
+    };
+    fetchPets();
+  }, []);
+
+  return (
+    <main className="landing-page">
+      <LandingNavbar />
+
+      {/* Hero */}
+      <section className="landing-hero">
+        <div className="landing-hero-text">
+          <h1>
+            Find Your<br />
+            <span className="landing-accent">Purrfect Match</span>
+          </h1>
+          <p>
+            Connecting loving hearts with paws in need. Discover the
+            joy of adoption and bring a lifetime of warmth to
+            your home today.
+          </p>
+          <Link to="/pets" className="landing-cta-btn">
+            Meet our Pets 🐾
+          </Link>
+        </div>
+        <div className="landing-hero-image">
+          <img src="/hero.png" alt="Person hugging a dog" />
+        </div>
+      </section>
+
+      {/* Featured Furry Friends */}
+      {featuredPets.length > 0 && (
+        <section className="featured-section" id="featured-pets">
+          <div className="featured-header">
+            <div>
+              <h2 className="featured-title">Featured Furry Friends</h2>
+              <p className="featured-subtitle">
+                These lovable companions are ready to find their forever homes.<br />
+                Could one of them be your purrfect match?
+              </p>
+            </div>
+            <Link to="/pets" className="featured-view-all">
+              View All Pets&nbsp;&nbsp;→
+            </Link>
+          </div>
+
+          <div className="featured-pets-grid">
+            {featuredPets.map((pet) => (
+              <FeaturedPetCard key={pet.id} pet={pet} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Footer */}
+      <footer className="landing-footer">
+        <div className="landing-footer-inner">
+          <h3 className="landing-footer-brand">Purrfect Match</h3>
+          <div className="landing-footer-links">
+            <Link to="/">Privacy Policy</Link>
+            <Link to="/">Terms of Services</Link>
+            <Link to="/">Contact Us</Link>
+          </div>
+          <p className="landing-footer-copy">
+            © {new Date().getFullYear()} Purrfect Match. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
+
+export default LandingPage;

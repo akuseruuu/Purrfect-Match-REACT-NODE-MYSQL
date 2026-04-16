@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS purrfect_match;
+USE purrfect_match;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'adopter') NOT NULL DEFAULT 'adopter',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS pets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  species VARCHAR(50) DEFAULT 'Dog',
+  breed VARCHAR(100) NOT NULL,
+  age INT NOT NULL,
+  description TEXT,
+  tags VARCHAR(255) DEFAULT NULL,
+  image VARCHAR(255),
+  status ENUM('Available', 'Adopted', 'Pending') DEFAULT 'Available',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
