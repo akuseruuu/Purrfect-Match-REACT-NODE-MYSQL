@@ -1,4 +1,4 @@
-* {
+﻿* {
   box-sizing: border-box;
 }
 
@@ -18,7 +18,7 @@ main {
   min-height: 100vh;
 }
 
-/* ─── Old Navbar (Login/Signup pages) ─── */
+/* â”€â”€â”€ Old Navbar (Login/Signup pages) â”€â”€â”€ */
 .navbar {
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@ main {
   gap: 12px;
 }
 
-/* ─── Landing Page ─── */
+/* â”€â”€â”€ Landing Page â”€â”€â”€ */
 .landing-page {
   background-color: #faf3eb;
   min-height: 100vh;
@@ -175,7 +175,7 @@ main {
   object-fit: cover;
 }
 
-/* ─── Shared Page Styles ─── */
+/* â”€â”€â”€ Shared Page Styles â”€â”€â”€ */
 .hero {
   text-align: center;
   padding: 80px 20px;
@@ -260,7 +260,7 @@ button {
   margin: 0;
 }
 
-/* ─── Auth Pages (Login / Signup) ─── */
+/* â”€â”€â”€ Auth Pages (Login / Signup) â”€â”€â”€ */
 .auth-page {
   background-color: #faf3eb;
   min-height: 100vh;
@@ -276,7 +276,7 @@ button {
 .auth-container {
   display: flex;
   max-width: 850px;
-  margin: 20px auto 40px;
+  margin: 80px auto 40px;
   background-color: #fffbf5;
   border-radius: 16px;
   overflow: hidden;
@@ -392,7 +392,7 @@ button {
   text-decoration: underline;
 }
 
-/* ─── Featured Furry Friends Section ─── */
+/* â”€â”€â”€ Featured Furry Friends Section â”€â”€â”€ */
 .featured-section {
   background-color: #f0e6da;
   padding: 60px 80px 72px;
@@ -442,7 +442,7 @@ button {
   margin: 0 auto;
 }
 
-/* ─── Featured Pet Card ─── */
+/* â”€â”€â”€ Featured Pet Card â”€â”€â”€ */
 .featured-pet-card {
   background: #fffbf5;
   border-radius: 16px;
@@ -555,7 +555,7 @@ button {
   color: #fff;
 }
 
-/* ─── Landing Footer ─── */
+/* â”€â”€â”€ Landing Footer â”€â”€â”€ */
 .landing-footer {
   background-color: #b89b78;
   color: #fff;
@@ -602,7 +602,7 @@ button {
   margin: 0;
 }
 
-/* ─── Responsive: Featured Section ─── */
+/* â”€â”€â”€ Responsive: Featured Section â”€â”€â”€ */
 @media (max-width: 900px) {
   .featured-section {
     padding: 40px 24px 48px;
@@ -634,7 +634,7 @@ button {
   }
 }
 
-/* ─── Find a Pet Page Redesign ─── */
+/* â”€â”€â”€ Find a Pet Page Redesign â”€â”€â”€ */
 .findpets-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -713,7 +713,7 @@ button {
   padding: 10px 40px 10px 16px;
   border-radius: 8px;
   border: none;
-  background-color: #ebdacf; 
+  background-color: #ebdacf;
   font-size: 15px;
   font-weight: 700;
   color: #000;
@@ -932,7 +932,7 @@ button {
   }
 }
 
-/* ─── Pet Profile Page ─── */
+/* â”€â”€â”€ Pet Profile Page â”€â”€â”€ */
 .pet-profile-section {
   max-width: 1060px;
   margin: 0 auto;

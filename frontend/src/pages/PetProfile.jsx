@@ -143,6 +143,10 @@ function PetProfile() {
                 <span className="pet-profile-meta-value">{pet.breed}</span>
               </div>
               <div className="pet-profile-meta-item">
+                <span className="pet-profile-meta-label">Gender</span>
+                <span className="pet-profile-meta-value">{pet.gender}</span>
+              </div>
+              <div className="pet-profile-meta-item">
                 <span className="pet-profile-meta-label">Age</span>
                 <span className="pet-profile-meta-value">{formatAge(pet.age)}</span>
               </div>

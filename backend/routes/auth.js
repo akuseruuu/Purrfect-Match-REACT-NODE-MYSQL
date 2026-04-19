@@ -4,27 +4,26 @@ const pool = require("../config/db");
 
 const router = express.Router();
 
-// ── POST /api/register ──────────────────────────────────────────────────────
+// ── POST /api/register (User / Adopter) ─────────────────────────────────────
 router.post("/register", async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { full_name, email, password, phone, address } = req.body;
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ success: false, message: "Name, email and password are required." });
+  if (!full_name || !email || !password) {
+    return res.status(400).json({ success: false, message: "Full name, email and password are required." });
   }
 
   try {
     // Check for existing user
-    const [existing] = await pool.query("SELECT id FROM users WHERE email = ? LIMIT 1", [email]);
+    const [existing] = await pool.query("SELECT user_id FROM users WHERE email = ? LIMIT 1", [email]);
     if (existing.length > 0) {
       return res.status(409).json({ success: false, message: "Email already exists." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userRole = role || "adopter";
 
     await pool.query(
-      "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-      [name, email, hashedPassword, userRole]
+      "INSERT INTO users (full_name, email, password, phone, address) VALUES (?, ?, ?, ?, ?)",
+      [full_name, email, hashedPassword, phone || null, address || null]
     );
 
     res.json({ success: true, message: "User registered successfully." });
@@ -34,7 +33,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ── POST /api/login ─────────────────────────────────────────────────────────
+// ── POST /api/login (User / Adopter) ────────────────────────────────────────
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -44,7 +43,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const [rows] = await pool.query(
-      "SELECT id, name, email, password, role FROM users WHERE email = ? LIMIT 1",
+      "SELECT user_id, full_name, email, password, phone, address FROM users WHERE email = ? LIMIT 1",
       [email]
     );
 
@@ -61,10 +60,75 @@ router.post("/login", async (req, res) => {
 
     // Remove password before sending
     const { password: _pwd, ...safeUser } = user;
+    safeUser.role = "adopter";
     res.json({ success: true, message: "Login successful.", user: safeUser });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Login failed." });
+  }
+});
+
+// ── POST /api/admin/login ───────────────────────────────────────────────────
+router.post("/admin/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ success: false, message: "Username and password are required." });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      "SELECT admin_id, username, password, full_name FROM admins WHERE username = ? LIMIT 1",
+      [username]
+    );
+
+    if (rows.length === 0) {
+      return res.status(401).json({ success: false, message: "Invalid credentials." });
+    }
+
+    const admin = rows[0];
+    const passwordMatch = await bcrypt.compare(password, admin.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ success: false, message: "Invalid credentials." });
+    }
+
+    // Remove password before sending
+    const { password: _pwd, ...safeAdmin } = admin;
+    safeAdmin.role = "admin";
+    res.json({ success: true, message: "Admin login successful.", user: safeAdmin });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Login failed." });
+  }
+});
+
+// ── POST /api/admin/register ────────────────────────────────────────────────
+router.post("/admin/register", async (req, res) => {
+  const { username, full_name, password } = req.body;
+
+  if (!username || !full_name || !password) {
+    return res.status(400).json({ success: false, message: "Username, full name and password are required." });
+  }
+
+  try {
+    // Check for existing admin
+    const [existing] = await pool.query("SELECT admin_id FROM admins WHERE username = ? LIMIT 1", [username]);
+    if (existing.length > 0) {
+      return res.status(409).json({ success: false, message: "Username already exists." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await pool.query(
+      "INSERT INTO admins (username, full_name, password) VALUES (?, ?, ?)",
+      [username, full_name, hashedPassword]
+    );
+
+    res.json({ success: true, message: "Admin registered successfully." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Admin registration failed." });
   }
 });
 

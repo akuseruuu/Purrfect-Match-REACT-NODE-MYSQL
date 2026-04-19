@@ -2,12 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/api";
 
-function Signup() {
+function AdminSignup() {
   const [formData, setFormData] = useState({
     full_name: "",
-    phone: "",
-    email: "",
-    address: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -31,12 +29,13 @@ function Signup() {
     }
 
     try {
-      const response = await API.post("/register", formData);
+      const response = await API.post("/admin/register", formData);
       if (!response.data.success) {
         setError(response.data.message || "Signup failed.");
         return;
       }
-      navigate("/login");
+      // Redirect to admin login on success
+      navigate("/admin/login");
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Unable to signup.");
     }
@@ -57,23 +56,15 @@ function Signup() {
           <img src="/signup-cat.png" alt="Orange tabby cat" />
         </div>
         <div className="auth-form-wrapper">
-          <h2 className="auth-title">Sign-up</h2>
+          <h2 className="auth-title">Admin Sign-up</h2>
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="auth-field">
               <label>Full Name:</label>
               <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} required />
             </div>
             <div className="auth-field">
-              <label>Phone:</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
-            </div>
-            <div className="auth-field">
-              <label>Email:</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-            </div>
-            <div className="auth-field">
-              <label>Address:</label>
-              <input type="text" name="address" value={formData.address} onChange={handleChange} />
+              <label>Username:</label>
+              <input type="text" name="username" value={formData.username} onChange={handleChange} required />
             </div>
             <div className="auth-field">
               <label>Password:</label>
@@ -83,10 +74,10 @@ function Signup() {
               <label>Confirm Password:</label>
               <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
             </div>
-            <button type="submit" className="auth-submit-btn">Sign Up</button>
+            <button type="submit" className="auth-submit-btn">Sign Up Admin</button>
             {error ? <p className="error-text">{error}</p> : null}
             <p className="auth-switch">
-              Already have an account? <Link to="/login" className="auth-switch-link">Log-in</Link>
+              Already an admin? <Link to="/admin/login" className="auth-switch-link">Admin Log-in</Link>
             </p>
           </form>
         </div>
@@ -95,4 +86,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default AdminSignup;
