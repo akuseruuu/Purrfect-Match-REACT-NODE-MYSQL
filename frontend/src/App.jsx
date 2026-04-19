@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AdminLogin from "./pages/AdminLogin";
+import AdminSignup from "./pages/AdminSignup";
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminPets from "./pages/AdminPets";
@@ -13,7 +15,7 @@ import About from "./pages/About";
 function ProtectedAdminRoute({ children }) {
   const user = JSON.parse(localStorage.getItem("user") || "null");
   if (!user || user.role !== "admin") {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
   return children;
 }
@@ -25,6 +27,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/pets" element={<FindPets />} />
         <Route path="/pets/:id" element={<PetProfile />} />
         <Route path="/donate" element={<Donate />} />

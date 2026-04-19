@@ -5,6 +5,8 @@ const emptyForm = {
   species: "",
   breed: "",
   age: "",
+  gender: "Male",
+  is_vaccinated: "No",
   description: "",
   tags: "",
 };
@@ -22,6 +24,8 @@ function PetForm({ selectedPet, onSubmit, onCancel, isOpen, onClose }) {
         species: selectedPet.species || "",
         breed: selectedPet.breed || "",
         age: selectedPet.age || "",
+        gender: selectedPet.gender || "Male",
+        is_vaccinated: selectedPet.is_vaccinated || "No",
         description: selectedPet.description || "",
         tags: selectedPet.tags || "",
       });
@@ -56,6 +60,8 @@ function PetForm({ selectedPet, onSubmit, onCancel, isOpen, onClose }) {
     data.append("species", formData.species);
     data.append("breed", formData.breed);
     data.append("age", formData.age);
+    data.append("gender", formData.gender);
+    data.append("is_vaccinated", formData.is_vaccinated);
     data.append("description", formData.description);
     data.append("tags", formData.tags);
 
@@ -103,7 +109,15 @@ function PetForm({ selectedPet, onSubmit, onCancel, isOpen, onClose }) {
             <option value="Other">Other</option>
           </select>
           <input name="breed" placeholder="Breed" value={formData.breed} onChange={handleChange} required />
-          <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} min="0" required />
+          <input type="number" name="age" placeholder="Age (in months)" value={formData.age} onChange={handleChange} min="0" required />
+          <select name="gender" value={formData.gender} onChange={handleChange} required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <select name="is_vaccinated" value={formData.is_vaccinated} onChange={handleChange} required>
+            <option value="No">Not Vaccinated</option>
+            <option value="Yes">Vaccinated</option>
+          </select>
           <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} rows={3} />
           <input name="tags" placeholder="Tags (comma-separated, e.g. Friendly, Playful)" value={formData.tags} onChange={handleChange} />
           <label className="pet-file-label">

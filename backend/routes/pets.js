@@ -27,7 +27,7 @@ const upload = multer({ storage, fileFilter });
 router.get("/", async (_req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT id, name, species, breed, age, description, tags, image, status, created_at FROM pets ORDER BY id DESC"
+      "SELECT id, name, species, breed, age, gender, is_vaccinated, description, tags, image, status, created_at FROM pets ORDER BY id DESC"
     );
     res.json({ success: true, data: rows });
   } catch (err) {
@@ -38,7 +38,7 @@ router.get("/", async (_req, res) => {
 
 // ── POST /api/pets ──────────────────────────────────────────────────────────
 router.post("/", upload.single("image"), async (req, res) => {
-  const { name, species, breed, age, description, tags } = req.body;
+  const { name, species, breed, age, gender, is_vaccinated, description, tags } = req.body;
 
   if (!name || !breed || age === undefined || age === "") {
     return res.status(400).json({ success: false, message: "Name, breed and age are required." });
@@ -48,8 +48,8 @@ router.post("/", upload.single("image"), async (req, res) => {
 
   try {
     await pool.query(
-      "INSERT INTO pets (name, species, breed, age, description, tags, image) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [name, species || "", breed, parseInt(age, 10), description || "", tags || "", imagePath]
+      "INSERT INTO pets (name, species, breed, age, gender, is_vaccinated, description, tags, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [name, species || "", breed, parseInt(age, 10), gender || "Male", is_vaccinated || "No", description || "", tags || "", imagePath]
     );
     res.json({ success: true, message: "Pet added successfully." });
   } catch (err) {
@@ -61,7 +61,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 // ── PUT /api/pets/:id ───────────────────────────────────────────────────────
 router.put("/:id", upload.single("image"), async (req, res) => {
   const { id } = req.params;
-  const { name, species, breed, age, description, tags, existing_image } = req.body;
+  const { name, species, breed, age, gender, is_vaccinated, description, tags, existing_image } = req.body;
 
   if (!name || !breed || age === undefined || age === "") {
     return res.status(400).json({ success: false, message: "Name, breed and age are required." });
@@ -71,8 +71,8 @@ router.put("/:id", upload.single("image"), async (req, res) => {
 
   try {
     const [result] = await pool.query(
-      "UPDATE pets SET name = ?, species = ?, breed = ?, age = ?, description = ?, tags = ?, image = ? WHERE id = ?",
-      [name, species || "", breed, parseInt(age, 10), description || "", tags || "", imagePath, parseInt(id, 10)]
+      "UPDATE pets SET name = ?, species = ?, breed = ?, age = ?, gender = ?, is_vaccinated = ?, description = ?, tags = ?, image = ? WHERE id = ?",
+      [name, species || "", breed, parseInt(age, 10), gender || "Male", is_vaccinated || "No", description || "", tags || "", imagePath, parseInt(id, 10)]
     );
     const success = result.affectedRows > 0;
     res.json({ success, message: success ? "Pet updated successfully." : "Failed to update pet." });
